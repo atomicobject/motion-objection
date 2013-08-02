@@ -5,7 +5,6 @@ require "motion-cocoapods"
 
 $:.unshift("./lib/")
 require './lib/motion-objection'
-require './lib/motion-objection/objection_property_reflector.rb'
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.

@@ -14,8 +14,8 @@ module Objection
   end
 
   module ClassMethods
-    def objectionRequires(*args)
-      @_dependencies || Set.new
+    def objectionRequires
+      @_dependencies || NSSet.new
     end
 
     def compose_with(*args)

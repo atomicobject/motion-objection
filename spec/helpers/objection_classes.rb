@@ -8,6 +8,7 @@ class Engine
   singleton
 
   def shift(wat)
+    puts "SHIFT!"
   end
 end
 
