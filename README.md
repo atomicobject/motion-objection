@@ -3,7 +3,7 @@ motion-objection
 
 Wrapping Objection in RubyMotion.
 
-```objective-c
+```ruby
 class Car
   include Objection
   compose_with :engine, :brakes
