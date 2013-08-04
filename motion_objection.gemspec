@@ -5,7 +5,8 @@ Gem::Specification.new do |gem|
   gem.version       = Objection::VERSION
   gem.licenses      = ['MIT']
 
-  gem.authors  = ['dewind']
+  gem.authors   = 'Justin DeWind'
+  gem.email     = 'dewind@atomicobject.com'
 
   gem.description = <<-DESC
   motion-objection is a wrapper around Objection which is a dependency
