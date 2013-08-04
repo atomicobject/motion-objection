@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    motion-objection (0.5)
+      motion-cocoapods (~> 1.3.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -29,6 +35,7 @@ GEM
     multi_json (1.7.7)
     nap (0.5.1)
     open4 (1.3.0)
+    rake (10.0.4)
     xcodeproj (0.8.1)
       activesupport (~> 3.2.13)
       colored (~> 1.2)
@@ -37,5 +44,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods
-  motion-cocoapods
+  motion-objection!
+  rake

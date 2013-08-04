@@ -1,4 +1,7 @@
 source "https://rubygems.org"
 
-gem "cocoapods"
-gem "motion-cocoapods"
+group :test, :development do
+  gem 'rake'
+end
+
+gemspec

@@ -1,4 +1,5 @@
 module Objection
+
   def self.included(base)
     base.send :extend, ClassMethods
   end
