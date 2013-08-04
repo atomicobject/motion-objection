@@ -8,6 +8,6 @@ Motion::Project::App.setup do |app|
   end
 
   app.pods do
-    pod 'Objection', path: "/Users/dewindj/git/objection"
+    pod 'Objection', "~>1.0.2"
   end
 end

@@ -14,17 +14,27 @@ module Objection
   end
 
   module ClassMethods
-    def objectionRequires
-      @_dependencies || NSSet.new
-    end
 
     def compose_with(*args)
-      args.each { |x| attr_accessor x }
-      @_dependencies = NSSet.setWithArray(args.map(&:to_s))
+      props = args.map { |x| x.split("/").last }
+      props.each { |x| attr_accessor x }
+      @_types_mappings = {}
+      props.each_index { |i| @_types_mappings[props[i]] = args[i] }
+      @_dependencies = NSSet.setWithArray(props.map(&:to_s))
     end
 
     def singleton
       JSObjection.registerClass self, scope: JSObjectionScopeSingleton 
+    end
+
+    protected 
+
+    def objectionRequires
+      @_dependencies || NSSet.new
+    end
+
+    def objectionTypeMappings
+      @_types_mappings || {}
     end
   end
 end

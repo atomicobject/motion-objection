@@ -6,9 +6,16 @@ end
 class Engine
   include Objection
   singleton
+  compose_with 'engine/crank_shaft', 'engine/rod'
 
   def shift(wat)
     puts "SHIFT!"
+  end
+
+  class CrankShaft
+  end 
+
+  class Rod
   end
 end
 
