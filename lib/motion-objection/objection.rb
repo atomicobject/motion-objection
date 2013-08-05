@@ -10,7 +10,7 @@ module Objection
     elsif modules.size == 1
       JSObjection.createInjector modules.first
     else
-      JSObjection.createInjectorWithModules *modules
+      JSObjection.createInjectorWithModulesArray modules
     end
   end
 
@@ -31,11 +31,23 @@ module Objection
     protected 
 
     def objectionRequires
-      @_dependencies || NSSet.new
+      @_dependencies ||= NSSet.set
+      if self.superclass.respondsToSelector :objectionRequires
+        set = NSMutableSet.setWithSet self.superclass.objectionRequires
+        set.unionSet @_dependencies
+        set
+      else
+        @_dependencies
+      end
     end
 
     def objectionTypeMappings
-      @_types_mappings || {}
+      @_types_mappings ||= {}
+      if self.superclass.respondsToSelector :objectionTypeMappings
+        @_types_mappings.merge self.superclass.objectionTypeMappings
+      else
+        @_types_mappings
+      end
     end
   end
 end

@@ -19,7 +19,14 @@ class Engine
   end
 end
 
+class V6Engine < Engine; end
+
 class Brakes
   def brake!
+  end
+end
+
+class ABSBrakes < Brakes
+  def abs_brake!
   end
 end
