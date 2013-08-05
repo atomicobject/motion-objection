@@ -3,6 +3,8 @@ motion-objection
 
 Wrapping Objection in RubyMotion.
 
+## Basic Example
+
 ```ruby
 class Car
   include Objection
@@ -27,6 +29,24 @@ end
 
 class Brakes
   def brake!
+  end
+end
+```
+
+## Initializers
+
+```ruby
+class ViewController < NSObject
+  include Objection
+  initializer "initWithNibName:bundle:", "Home"
+
+  attr_reader :name
+
+  def initWithNibName(name, bundle: bundle)
+    self.init
+    self.tap do
+      @name = name
+    end
   end
 end
 ```
