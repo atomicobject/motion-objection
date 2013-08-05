@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
 
   gem.description = <<-DESC
   motion-objection is a wrapper around Objection which is a dependency
-  injection framework writtent for Objective-C
+  injection framework written for Objective-C
 DESC
 
   gem.summary = 'A ruby motion library wrapping the popular dependency injection library Objection'
