@@ -3,6 +3,8 @@ motion-objection
 
 Wrapping Objection in RubyMotion.
 
+[![Build Status](https://travis-ci.org/atomicobject/motion-objection.png)](https://travis-ci.org/atomicobject/motion-objection)
+
 ## Basic Example
 
 ```ruby
