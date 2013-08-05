@@ -14,6 +14,12 @@ module Objection
     end
   end
 
+  module Initializer
+    def objectionInitializer
+      @_initializer
+    end
+  end
+
   module ClassMethods
 
     def compose_with(*args)
@@ -26,6 +32,14 @@ module Objection
 
     def singleton
       JSObjection.registerClass self, scope: JSObjectionScopeSingleton 
+    end
+
+    def initializer(selector, *args)
+      self.send :extend, Initializer 
+      @_initializer = {
+        "initializer" => selector,
+        "arguments" => args
+      }
     end
 
     protected 

@@ -30,3 +30,17 @@ class ABSBrakes < Brakes
   def abs_brake!
   end
 end
+
+class ViewController < NSObject
+  include Objection
+  initializer "initWithNibName:bundle:", "Home"
+
+  attr_reader :name
+
+  def initWithNibName(name, bundle: bundle)
+    self.init
+    self.tap do
+      @name = name
+    end
+  end
+end

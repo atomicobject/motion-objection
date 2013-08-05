@@ -60,6 +60,9 @@ describe "Objection" do
   end
 
   describe "initializer" do
-    it "has support for default initializers"
+    it "has support for default initializers" do
+      @controller = @injector[ViewController]
+      @controller.name.should.equal "Home"
+    end
   end
 end
