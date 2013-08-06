@@ -72,5 +72,10 @@ describe "Objection" do
       @controller = @injector[ViewController]
       @controller.name.should.equal "Home"
     end
+
+    it "has support for getting an object with custom arguments" do
+      @controller = @injector.get_object ViewController, "Work"
+      @controller.name.should.equal "Work"
+    end
   end
 end
