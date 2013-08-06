@@ -3,6 +3,14 @@ describe "Objection" do
     @injector = Objection.injector
   end
 
+  describe "#default_injector" do
+    it "returns the default injector" do
+      Objection.default_injector.should.equal nil
+      Objection.default_injector = @injector
+      Objection.default_injector.should.equal @injector
+    end
+  end
+
   describe "dependency injection" do
     it "supports inheritance" do
       @engine = @injector[V6Engine]

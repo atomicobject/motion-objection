@@ -14,6 +14,14 @@ module Objection
     end
   end
 
+  def self.default_injector=(injector)
+    JSObjection.setDefaultInjector injector
+  end
+
+  def self.default_injector
+    JSObjection.defaultInjector
+  end
+
   module Initializer
     def objectionInitializer
       @_initializer
