@@ -1,10 +1,14 @@
 motion-objection
 ================
 
-Wrapping Objection in RubyMotion.
+Wrapping the dependency injection library [Objection](https://github.com/atomicobject/objection) in RubyMotion.
 
 [![Build Status](https://travis-ci.org/atomicobject/motion-objection.png)](https://travis-ci.org/atomicobject/motion-objection)
 
+## Install
+```bash
+gem install motion-objection
+```
 ## Basic Example
 
 ```ruby
@@ -51,4 +55,10 @@ class ViewController < NSObject
     end
   end
 end
+```
+
+## Default Injector
+
+```ruby
+Objection.default_injector = Objection.injector
 ```
