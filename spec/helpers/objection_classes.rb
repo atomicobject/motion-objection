@@ -1,6 +1,6 @@
 class Car
   include Objection
-  compose_with :engine, :brakes
+  compose_with :engine, :brakes, factory: JSObjectFactory
 end
 
 class Engine

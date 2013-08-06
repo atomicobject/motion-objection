@@ -23,6 +23,7 @@ describe "Objection" do
       @car = @injector.get_object Car
       @car.engine.class.should.be.same_as Engine
       @car.brakes.class.should.be.same_as Brakes
+      @car.factory.class.should.be.same_as JSObjectFactory
     end
 
     it "has support for singletons" do

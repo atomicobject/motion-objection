@@ -31,11 +31,23 @@ module Objection
   module ClassMethods
 
     def compose_with(*args)
-      props = args.map { |x| x.split("/").last }
-      props.each { |x| attr_accessor x }
-      @_types_mappings = {}
-      props.each_index { |i| @_types_mappings[props[i]] = args[i] }
-      @_dependencies = NSSet.setWithArray(props.map(&:to_s))
+      @_type_mappings = {}
+      properties = []
+      args.each do |arg|
+        if arg.is_a? Hash
+          arg.each do |k,v|
+            @_type_mappings[k.to_s] = v
+            attr_accessor k
+            properties << k
+          end
+        else
+          prop = arg.split("/").last
+          attr_accessor prop
+          @_type_mappings[prop] = arg
+          properties << prop
+        end
+      end
+      @_dependencies = NSSet.setWithArray(properties.map(&:to_s))
     end
 
     def singleton
@@ -64,11 +76,11 @@ module Objection
     end
 
     def objectionTypeMappings
-      @_types_mappings ||= {}
+      @_type_mappings ||= {}
       if self.superclass.respondsToSelector :objectionTypeMappings
-        @_types_mappings.merge self.superclass.objectionTypeMappings
+        @_type_mappings.merge self.superclass.objectionTypeMappings
       else
-        @_types_mappings
+        @_type_mappings
       end
     end
   end
