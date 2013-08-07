@@ -43,7 +43,7 @@ module Objection
         else
           prop = arg.split("/").last
           attr_accessor prop
-          @_type_mappings[prop] = arg
+          @_type_mappings[prop] = arg.to_s
           properties << prop
         end
       end
