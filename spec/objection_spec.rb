@@ -11,12 +11,25 @@ describe "Objection" do
     end
   end
 
+  describe "#inject_dependencies" do
+    it "injects dependencies into an object constructed outside of objection" do
+      @engine = V6Engine.new
+
+      @engine.crank_shaft.should.equal nil
+
+      @injector.inject_dependencies @engine
+
+      @engine.crank_shaft.class.should.be.same_as Engine::CrankShaft
+    end
+  end
+
   describe "dependency injection" do
     it "supports inheritance" do
       @engine = @injector[V6Engine]
 
       @engine.crank_shaft.class.should.be.same_as Engine::CrankShaft
       @engine.rod.class.should.be.same_as Engine::Rod
+      @engine.factory.class.should.be.same_as JSObjectFactory
     end
 
     it "can construct an object with dependencies" do

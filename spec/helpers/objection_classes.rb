@@ -19,7 +19,9 @@ class Engine
   end
 end
 
-class V6Engine < Engine; end
+class V6Engine < Engine
+  compose_with factory: JSObjectFactory
+end
 
 class Brakes
   def brake!
