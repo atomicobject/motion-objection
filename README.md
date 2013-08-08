@@ -5,6 +5,7 @@ Wrapping the dependency injection library [Objection](https://github.com/atomico
 
 [![Build Status](https://travis-ci.org/atomicobject/motion-objection.png)](https://travis-ci.org/atomicobject/motion-objection)
 [![Gem Version](https://badge.fury.io/rb/motion-objection.png)](http://badge.fury.io/rb/motion-objection)
+[![Code Climate](https://codeclimate.com/github/atomicobject/motion-objection.png)](https://codeclimate.com/github/atomicobject/motion-objection)
 
 ## Install
 ```bash
