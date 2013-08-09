@@ -15,12 +15,12 @@ gem install motion-objection
 
 ```ruby
 class Car
-  include Objection
+  include Objection::Compose
   compose_with :engine, :brakes, factory: JSObjectFactory
 end
 
 class Engine
-  include Objection
+  include Objection::Compose
   singleton
   compose_with 'engine/crank_shaft', 'engine/rod'
 
@@ -45,7 +45,7 @@ end
 
 ```ruby
 class ViewController < NSObject
-  include Objection
+  include Objection::Compose
   initializer "initWithNibName:bundle:", "Home"
 
   attr_reader :name

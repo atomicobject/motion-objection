@@ -17,3 +17,9 @@ class AppModuleII < JSObjectionModule
     bindClass ABSBrakes, toClass: Brakes
   end
 end
+
+class EagerSingletonModule < JSObjectionModule
+  def configure
+    registerEagerSingleton EagerCar
+  end
+end

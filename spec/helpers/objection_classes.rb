@@ -1,10 +1,20 @@
 class Car
-  include Objection
-  compose_with :engine, :brakes, factory: JSObjectFactory
+  include Objection::Compose
+  compose_with :engine, :brakes, factory: JSObjectFactory  
+end
+
+class EagerCar
+  include Objection::Compose
+  singleton
+  class<<self; attr_accessor :awoke; end
+
+  def awakeFromObjection
+    self.class.awoke = true
+  end
 end
 
 class Engine
-  include Objection
+  include Objection::Compose
   singleton
   compose_with 'engine/crank_shaft', 'engine/rod'
 
@@ -34,7 +44,7 @@ class ABSBrakes < Brakes
 end
 
 class ViewController < NSObject
-  include Objection
+  include Objection::Compose
   initializer "initWithNibName:bundle:", "Home"
 
   attr_reader :name

@@ -67,6 +67,11 @@ describe "Objection" do
       @app_module2 = AppModuleII.alloc.init
     end
 
+    it "has support for eager singletons" do
+      @injector = Objection.injector EagerSingletonModule.new
+      EagerCar.awoke.should.equal true
+    end
+
     it "has support for an injector with a module" do
       @injector = Objection.injector @app_module
 
