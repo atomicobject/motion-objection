@@ -1,3 +1,4 @@
 language: objective-c
 before_script: sudo chown -R travis ~/Library/RubyMotion
+script: rake clean spec
 
