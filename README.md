@@ -59,7 +59,7 @@ class ViewController < NSObject
 end
 ```
 
-## Default Injector
+## Injector
 
 ```ruby
 Objection.default_injector = Objection.injector AppModule.new, SecondaryModule.new
