@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Motion Objection by atomicobject</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Motion Objection</h1>
+        <p>Wrapping Objection in RubyMotion.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/atomicobject/motion-objection" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/atomicobject/motion-objection/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/atomicobject/motion-objection/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a name="motion-objection" class="anchor" href="#motion-objection"><span class="octicon octicon-link"></span></a>motion-objection</h1>
+
+<p>Wrapping the dependency injection library <a href="https://github.com/atomicobject/objection">Objection</a> in RubyMotion.</p>
+
+
+
+<p><a href="http://badge.fury.io/rb/motion-objection"><img src="https://badge.fury.io/rb/motion-objection.png" alt="Gem Version"></a>
+<a href="https://codeclimate.com/github/atomicobject/motion-objection"><img src="https://codeclimate.com/github/atomicobject/motion-objection.png" alt="Code Climate"></a></p>
+
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<div class="highlight"><pre>gem install motion-objection
+</pre></div>
+
+<h2>
+<a name="basic-example" class="anchor" href="#basic-example"><span class="octicon octicon-link"></span></a>Basic Example</h2>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Car</span>
+  <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
+  <span class="n">compose_with</span> <span class="ss">:engine</span><span class="p">,</span> <span class="ss">:brakes</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="no">JSObjectFactory</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Engine</span>
+  <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
+  <span class="n">singleton</span>
+  <span class="n">compose_with</span> <span class="s1">'engine/crank_shaft'</span><span class="p">,</span> <span class="s1">'engine/rod'</span>
+
+  <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="n">wat</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">"SHIFT!"</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="nc">CrankShaft</span>
+  <span class="k">end</span> 
+
+  <span class="k">class</span> <span class="nc">Rod</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Brakes</span>
+  <span class="k">def</span> <span class="nf">brake!</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="initializers" class="anchor" href="#initializers"><span class="octicon octicon-link"></span></a>Initializers</h2>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ViewController</span> <span class="o">&lt;</span> <span class="no">NSObject</span>
+  <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
+  <span class="n">initializer</span> <span class="s2">"initWithNibName:bundle:"</span><span class="p">,</span> <span class="s2">"Home"</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:name</span>
+
+  <span class="k">def</span> <span class="nf">initWithNibName</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="ss">bundle</span><span class="p">:</span> <span class="n">bundle</span><span class="p">)</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">init</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span>
+      <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="injector" class="anchor" href="#injector"><span class="octicon octicon-link"></span></a>Injector</h2>
+
+<div class="highlight"><pre><span class="no">Objection</span><span class="o">.</span><span class="n">default_injector</span> <span class="o">=</span> <span class="no">Objection</span><span class="o">.</span><span class="n">injector</span> <span class="no">AppModule</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">SecondaryModule</span><span class="o">.</span><span class="n">new</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/atomicobject">atomicobject</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
