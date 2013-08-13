@@ -42,7 +42,7 @@
         <h1>
 <a name="motion-objection" class="anchor" href="#motion-objection"><span class="octicon octicon-link"></span></a>motion-objection</h1>
 
-<p>Wrapping the dependency injection library <a href="https://github.com/atomicobject/objection">Objection</a> in RubyMotion.</p>
+<p>Motion-objection wraps the Objective-C dependency injection library <a href="https://github.com/atomicobject/objection">Objection</a> in Ruby so that it can be used in <a href="http://www.rubymotion.com/">RubyMotion</a>. It has all of the power (and speed) of Objection and the declarative affordances that the Ruby language provides.</p>
 
 
 
@@ -50,27 +50,27 @@
 <a href="https://codeclimate.com/github/atomicobject/motion-objection"><img src="https://codeclimate.com/github/atomicobject/motion-objection.png" alt="Code Climate"></a></p>
 
 <h2>
-<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <div class="highlight"><pre>gem install motion-objection
 </pre></div>
 
 <h2>
-<a name="basic-example" class="anchor" href="#basic-example"><span class="octicon octicon-link"></span></a>Basic Example</h2>
+<a name="basic-usage" class="anchor" href="#basic-usage"><span class="octicon octicon-link"></span></a>Basic Usage</h2>
+
+<p>A class can declare requires component objects by mixing in <code>Objection::Compose</code> and calling the <code>.compose_with</code> method </p>
 
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">Car</span>
   <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
-  <span class="n">compose_with</span> <span class="ss">:engine</span><span class="p">,</span> <span class="ss">:brakes</span><span class="p">,</span> <span class="ss">factory</span><span class="p">:</span> <span class="no">JSObjectFactory</span>
+  <span class="n">compose_with</span> <span class="ss">:engine</span><span class="p">,</span> <span class="ss">:brakes</span>
 <span class="k">end</span>
+</pre></div>
 
-<span class="k">class</span> <span class="nc">Engine</span>
+<p>Where <code>:engine</code> and <code>:brakes</code> are assumed to be the <code>Engine</code> and <code>Brakes</code> classes. Classes that are namespaced can be declared as well by separating the namespaces using the <code>/</code> character.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Engine</span>
   <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
-  <span class="n">singleton</span>
   <span class="n">compose_with</span> <span class="s1">'engine/crank_shaft'</span><span class="p">,</span> <span class="s1">'engine/rod'</span>
-
-  <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="n">wat</span><span class="p">)</span>
-    <span class="nb">puts</span> <span class="s2">"SHIFT!"</span>
-  <span class="k">end</span>
 
   <span class="k">class</span> <span class="nc">CrankShaft</span>
   <span class="k">end</span> 
@@ -78,17 +78,34 @@
   <span class="k">class</span> <span class="nc">Rod</span>
   <span class="k">end</span>
 <span class="k">end</span>
+</pre></div>
 
-<span class="k">class</span> <span class="nc">Brakes</span>
-  <span class="k">def</span> <span class="nf">brake!</span>
-  <span class="k">end</span>
+<p>Sometimes you may need to declare the component object <em>and</em> the class that is associated with it.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Brakes</span>
+<span class="n">compose_with</span> <span class="ss">factory</span><span class="p">:</span> <span class="no">JSObjectFactory</span>
 <span class="k">end</span>
 </pre></div>
 
 <h2>
-<a name="initializers" class="anchor" href="#initializers"><span class="octicon octicon-link"></span></a>Initializers</h2>
+<a name="singletons" class="anchor" href="#singletons"><span class="octicon octicon-link"></span></a>Singletons</h2>
 
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">ViewController</span> <span class="o">&lt;</span> <span class="no">NSObject</span>
+<p>Singletons can be declared by calling the <code>.singleton</code> method in the class body. Singletons should really only be necessary if they contain <em>shared state</em>. Otherwise it behooves you to avoid singletons in order to reduce the memory footprint of an application.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Holder</span>
+<span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
+<span class="n">singleton</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="default-initializers" class="anchor" href="#default-initializers"><span class="octicon octicon-link"></span></a>Default Initializers</h2>
+
+<p>Objection uses <a href="http://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html">Key-Value Coding</a> to compose an instance with its dependencies -- it does not use initializer injection.</p>
+
+<p>By default Objection initializes an object using the <code>init</code> initializer. A custom initializer can be declared using the <code>.initializer</code> method.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ViewController</span> <span class="o">&lt;</span> <span class="no">UIViewController</span>
   <span class="kp">include</span> <span class="ss">Objection</span><span class="p">:</span><span class="ss">:Compose</span>
   <span class="n">initializer</span> <span class="s2">"initWithNibName:bundle:"</span><span class="p">,</span> <span class="s2">"Home"</span>
 
@@ -104,9 +121,49 @@
 </pre></div>
 
 <h2>
-<a name="injector" class="anchor" href="#injector"><span class="octicon octicon-link"></span></a>Injector</h2>
+<a name="modules" class="anchor" href="#modules"><span class="octicon octicon-link"></span></a>Modules</h2>
 
-<div class="highlight"><pre><span class="no">Objection</span><span class="o">.</span><span class="n">default_injector</span> <span class="o">=</span> <span class="no">Objection</span><span class="o">.</span><span class="n">injector</span> <span class="no">AppModule</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="no">SecondaryModule</span><span class="o">.</span><span class="n">new</span>
+<p>Modules contribution configuration information to the Injector. Typically, this includes bindings for dependencies that the Injector cannot provide. For example, <code>UIApplication.sharedApplication</code> or the main application window.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">AppModule</span> <span class="o">&lt;</span> <span class="no">JSObjectionModule</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="ss">application</span><span class="p">:</span> <span class="n">application</span><span class="p">)</span>
+    <span class="vi">@window</span> <span class="o">=</span> <span class="n">window</span>
+    <span class="vi">@application</span> <span class="o">=</span> <span class="n">application</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">configure</span>
+    <span class="n">bind</span> <span class="vi">@window</span><span class="p">,</span> <span class="ss">toClass</span><span class="p">:</span> <span class="no">UIWindow</span>
+    <span class="n">bind</span> <span class="vi">@application</span><span class="p">,</span> <span class="ss">toClass</span><span class="p">:</span> <span class="no">UIApplication</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>There are a number of other configuration methods a module <a href="https://github.com/atomicobject/objection#modules">provides</a>.</p>
+
+<h2>
+<a name="bootstraping-an-application" class="anchor" href="#bootstraping-an-application"><span class="octicon octicon-link"></span></a>Bootstraping an Application</h2>
+
+<p>Typically an application is bootstrapped in the application delegate where an injector is created and set as the default injector via <code>.default_injector=</code>.</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">AppDelegate</span>
+  <span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="ss">didFinishLaunchingWithOptions</span><span class="p">:</span><span class="n">launchOptions</span><span class="p">)</span>
+    <span class="n">initialize_objection</span>
+    <span class="no">Objection</span><span class="o">.</span><span class="n">default_injector</span><span class="o">[</span><span class="no">ApplicationBootstrapper</span><span class="o">].</span><span class="n">bootstrap!</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">initialize_objection</span>
+    <span class="vi">@window</span> <span class="o">=</span> <span class="no">UIWindow</span><span class="o">.</span><span class="n">alloc</span><span class="o">.</span><span class="n">initWithFrame</span><span class="p">(</span><span class="no">UIScreen</span><span class="o">.</span><span class="n">mainScreen</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+    <span class="n">injector</span> <span class="o">=</span> <span class="no">Objection</span><span class="o">.</span><span class="n">injector</span><span class="p">(</span><span class="no">BankersDashboardModule</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@window</span><span class="p">,</span> <span class="no">UIApplication</span><span class="o">.</span><span class="n">sharedApplication</span><span class="p">))</span>
+    <span class="no">Objection</span><span class="o">.</span><span class="n">default_injector</span> <span class="o">=</span> <span class="n">injector</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">ApplicationBootstrapper</span>
+  <span class="k">def</span> <span class="nf">bootstrap!</span>
+    <span class="c1"># Bootstrap</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
       </section>
       <footer>
