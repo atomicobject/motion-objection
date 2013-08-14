@@ -59,6 +59,24 @@ singleton
 end
 ```
 
+## Awaking from Objection
+
+Since Objection utilizes _setter_ based injection the initializer does not guarentee that all the object's dependencies have been satisfied.
+
+The `awoke` class method can be given a block which will be invoked once the object has been fully instantiated.
+
+```ruby
+class Ship
+  awoke do
+    # Bootstrap listeners
+  end
+  
+  awoke do
+    # Setup other stuff
+  end
+end
+```
+
 ## Default Initializers
 
 Objection uses [Key-Value Coding](http://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html) to compose an instance with its dependencies -- it does not use initializer injection.
