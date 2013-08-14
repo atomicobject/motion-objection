@@ -63,15 +63,15 @@ end
 
 Since Objection utilizes _setter_ based injection the initializer does not guarentee that all the object's dependencies have been satisfied.
 
-The `awoke` class method can be given a block which will be invoked once the object has been fully instantiated.
+The `awoken` class method can be given a block which will be invoked once the object has been fully instantiated.
 
 ```ruby
 class Ship
-  awoke do
+  awoken do
     # Bootstrap listeners
   end
   
-  awoke do
+  awoken do
     # Setup other stuff
   end
 end
