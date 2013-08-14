@@ -69,7 +69,9 @@ describe "Objection" do
 
     it "has support for eager singletons" do
       @injector = Objection.injector EagerSingletonModule.new
+
       EagerCar.awoke.should.equal true
+      @injector[EagerCar].awoke.should.equal true
     end
 
     it "has support for an injector with a module" do

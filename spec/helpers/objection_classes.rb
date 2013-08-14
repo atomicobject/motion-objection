@@ -1,15 +1,26 @@
 class Car
   include Objection::Compose
+  attr_reader :started
   compose_with :engine, :brakes, factory: JSObjectFactory  
+
 end
 
 class EagerCar
   include Objection::Compose
   singleton
   class<<self; attr_accessor :awoke; end
+  attr_accessor :awoke
 
-  def awakeFromObjection
+  def boom
+    puts @boom
+  end
+
+  awoken do
     self.class.awoke = true
+  end
+
+  awoken do
+    self.awoke = true
   end
 end
 

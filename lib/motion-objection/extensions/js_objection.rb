@@ -1,3 +1,3 @@
-class JSObjection
+class JSObjection #:nodoc:
   setPropertyReflector RubyPropertyReflector
 end

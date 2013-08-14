@@ -1,10 +1,10 @@
 module Objection
   module Compose
-    def self.included(base)
+    def self.included(base) #:nodoc:
       base.send :extend, ClassMethods
     end
 
-    module Initializer
+    module Initializer #:nodoc:
       def objectionInitializer
         @_initializer
       end
