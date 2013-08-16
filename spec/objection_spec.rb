@@ -99,4 +99,16 @@ describe "Objection" do
       @controller.name.should.equal "Work"
     end
   end
+
+  describe "object factory" do
+    before do
+      @object_factory = @injector[JSObjectFactory]
+    end
+
+    it "will build an object via Objection" do
+      @object_factory[ViewController].name.should.equal "Home"
+      @object_factory.get_object(ViewController).name.should.equal "Home"
+      @object_factory.get_object(ViewController, "Work").name.should.equal "Work"
+    end
+  end
 end
