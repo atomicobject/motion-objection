@@ -8,6 +8,6 @@ Motion::Project::App.setup do |app|
   end
 
   app.pods do
-    pod "Objection", '~>1.1'
+    pod "Objection", '~>1.2'
   end
 end

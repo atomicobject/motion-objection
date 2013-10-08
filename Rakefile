@@ -15,6 +15,6 @@ Motion::Project::App.setup do |app|
   app.identifier = 'com.atomicobject.motion-objection'
 
   app.pods do 
-    pod "Objection", '~>1.1'
+    pod "Objection", '~>1.2'
   end
 end
