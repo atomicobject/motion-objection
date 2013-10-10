@@ -1,4 +1,4 @@
 language: objective-c
 install: bundle install
-before_script: pod repo update
+before_script: pod repo update && bundle exec rake pod:install
 script: bundle exec rake spec
