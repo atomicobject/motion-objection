@@ -7,6 +7,7 @@ describe "Objection" do
     it "returns the default injector" do
       Objection.default_injector.should.equal nil
       Objection.default_injector = @injector
+      default_injector.should == @injector
       Objection.default_injector.should.equal @injector
     end
   end
