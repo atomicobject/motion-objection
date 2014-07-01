@@ -1,4 +1,4 @@
 language: objective-c
 install: bundle install
-before_script: pod repo update && bundle exec rake pod:install
+before_script: pod repo update && bundle exec rake pod:install && sudo chown -R travis ~/Library/RubyMotion
 script: bundle exec rake spec
